@@ -21,7 +21,7 @@ function Music() {
       <React.Fragment>
         <ul>
           <li>
-            <Link to="/react-music/listen/:id/:name/:i">
+            <Link to="/react-music.com/listen/:id/:name/:i">
               <div>
                 <svg
                   width="24px"
@@ -42,7 +42,7 @@ function Music() {
             </Link>
           </li>
           <li>
-            <Link to="/react-music">
+            <Link to="/react-music.com">
               <div>
                 <svg
                   width="24px"
@@ -63,7 +63,7 @@ function Music() {
             </Link>
           </li>
           <li>
-            <Link to="/react-music/radio">
+            <Link to="/react-music.com/radio">
               <div>
                 <svg
                   width="24px"
@@ -84,7 +84,7 @@ function Music() {
             </Link>
           </li>
           <li>
-            <Link to="/react-music/search">
+            <Link to="/react-music.com/search">
               <div>
                 <svg
                   width="24"
@@ -121,7 +121,7 @@ function Music() {
         <div className="page404">
           <div>
             <h1>Page Not Found</h1>
-            <Link to="/react-music">
+            <Link to="/react-music.com">
               <button>Back to Home</button>
             </Link>
           </div>
@@ -150,7 +150,7 @@ function Music() {
         </div>
         <div id="fixednav">
           <h1>
-            <Link to="/react-music/about">Music.com</Link>
+            <Link to="/react-music.com/about">Music.com</Link>
           </h1>
           {menuShow ? (
             <nav id="navtop">
@@ -164,22 +164,22 @@ function Music() {
       </section>
       <section className="sectionArea" onClick={() => setmenuShow(false)}>
         <Switch>
-          <Route path="/react-music/listen">
+          <Route path="/react-music.com/listen">
             <MusicListen />
           </Route>
-          <Route path="/react-music" exact={true}>
+          <Route path="/react-music.com" exact={true}>
             <MusicBrowse />
           </Route>
-          <Route path="/react-music/radio">
+          <Route path="/react-music.com/radio">
             <MusicRadio />
           </Route>
-          <Route path="/react-music/search">
+          <Route path="/react-music.com/search">
             <MusicSearch />
           </Route>
-          <Route path="/react-music/artist">
+          <Route path="/react-music.com/artist">
             <MusicArtistPage />
           </Route>
-          <Route path="/react-music/about">
+          <Route path="/react-music.com/about">
             <MusicLogo />
           </Route>
           <Route path="*">

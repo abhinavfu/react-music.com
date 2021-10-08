@@ -78,7 +78,7 @@ function MusicSearch() {
       <React.Fragment>
         {artistId.map((a, i) => (
           <div className="div33" key={i}>
-            <Link to={`/react-music/artist/${props.id}/${a.name}`}>
+            <Link to={`/react-music.com/artist/${props.id}/${a.name}`}>
               <p>{a.name}</p>
               <div className="r-img b-radius c-hover">
                 <img src={a.image_url} alt="Artist Album Cover" />
@@ -117,7 +117,7 @@ function MusicSearch() {
           {searchItem.map((data, i) => (
             <div className="music-card-content" key={i}>
               <Link
-                to={`/react-music/listen/${data.result.primary_artist.id}/${data.result.primary_artist.name}/${i}`}
+                to={`/react-music.com/listen/${data.result.primary_artist.id}/${data.result.primary_artist.name}/${i}`}
               >
                 <div className="music-card b-radius c-hover">
                   <img

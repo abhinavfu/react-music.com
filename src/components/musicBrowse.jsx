@@ -58,7 +58,7 @@ function MusicBrowse() {
         {artistIdList.map((exx, a) => (
           <div className="container" key={a}>
             <h3>{exx.name}</h3>
-            <Link to={`/react-music/artist/${exx.id}/${exx.name}`}>
+            <Link to={`/react-music.com/artist/${exx.id}/${exx.name}`}>
               <p className="seeAll">See All</p>
             </Link>
             <MusicArtistSongs

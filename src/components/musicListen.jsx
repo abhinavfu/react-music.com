@@ -270,7 +270,9 @@ function MusicListen() {
               {nLen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 23">
                   <text className="cls-1" transform="translate(0 17)">
-                    <Link to={`/react-music/artist/${words[5]}/${words[6]}`}>
+                    <Link
+                      to={`/react-music.com/artist/${words[5]}/${words[6]}`}
+                    >
                       <tspan className="cls-2" x="0" y="0">
                         {artistName}
                       </tspan>
@@ -278,7 +280,7 @@ function MusicListen() {
                   </text>
                 </svg>
               ) : (
-                <Link to="/react-music/artist">
+                <Link to="/react-music.com/artist">
                   <p>{artistName}</p>
                 </Link>
               )}

@@ -29,7 +29,7 @@ function MusicArtistSongs(props) {
       {m0.map((data, i) => (
         <div className="music-card-content" key={i}>
           <Link
-            to={`/react-music/listen/${data.primary_artist.id}/${data.primary_artist.name}/${i}`}
+            to={`/react-music.com/listen/${data.primary_artist.id}/${data.primary_artist.name}/${i}`}
           >
             <div className="music-card b-radius c-hover">
               <img
