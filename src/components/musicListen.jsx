@@ -32,7 +32,7 @@ function MusicListen() {
   // ===== Set selection no. =====
   const [perPage, setPerPage] = useState(10);
   const [sNum, setsNum] = useState(0);
-  let songNum = parseInt(words[7]);
+  let songNum = words[7];
   function cleanNum() {
     if (songNum === ":i") {
       songNum = 0;
