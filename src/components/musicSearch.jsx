@@ -35,6 +35,7 @@ function MusicSearch() {
 
   // RAPID API Search
   useEffect(() => {
+    let isMount = true;
     // fetch(`https://genius.p.rapidapi.com/search?q=Kendrick%20Lamar`, {
     fetch(`https://genius.p.rapidapi.com/search?q=${data}`, {
       method: "GET",
@@ -45,11 +46,17 @@ function MusicSearch() {
     }).then((res) => {
       res.json().then((resp) => {
         // console.log(resp);
-        let apisearch = resp.response.hits;
-        setSearchList(apisearch);
+        if (isMount) {
+          let apisearch = resp.response.hits;
+          setSearchList(apisearch);
+        }
         // console.log(apisearch)
       });
     });
+
+    return () => {
+      isMount = false;
+    };
   }, [data]);
 
   function Artist(props) {
@@ -57,6 +64,7 @@ function MusicSearch() {
 
     // 2) RAPID API Artists
     useEffect(() => {
+      let isMount = true;
       fetch(`https://genius.p.rapidapi.com/artists/${props.id}`, {
         method: "GET",
         headers: {
@@ -67,11 +75,17 @@ function MusicSearch() {
       }).then((res) => {
         res.json().then((resp) => {
           // console.log(resp);
-          let apidata = [resp.response.artist];
-          setArtistsList(apidata);
+          if (isMount) {
+            let apidata = [resp.response.artist];
+            setArtistsList(apidata);
+          }
           // console.log(apidata)
         });
       });
+
+      return () => {
+        isMount = false;
+      };
     }, [props.id]);
 
     return (

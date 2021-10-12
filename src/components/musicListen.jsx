@@ -71,7 +71,7 @@ function MusicListen() {
     if (song_art_image_url === undefined) {
       setSongimg(pandaImg);
     }
-    if (x >= slides.length - 1) {
+    if (x >= slides.length) {
       setsNum(0);
     }
     if (songimg === undefined) {
@@ -112,6 +112,7 @@ function MusicListen() {
   const per_page = perPage;
 
   useEffect(() => {
+    let isMount = true;
     fetch(
       `https://genius.p.rapidapi.com/artists/${songId}/songs?sort=${sort}&page=${page}&per_page=${per_page}`,
       {
@@ -125,10 +126,16 @@ function MusicListen() {
     ).then((res) => {
       res.json().then((resp) => {
         // console.log(resp);
-        let apidata = resp.response.songs;
-        setS0(apidata);
+        if (isMount) {
+          let apidata = resp.response.songs;
+          setS0(apidata);
+        }
       });
     });
+
+    return () => {
+      isMount = false;
+    };
   }, [songId, sort, page, per_page]);
   // ========================= Fetch Artists Songs end =========================
 

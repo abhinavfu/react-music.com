@@ -5,6 +5,7 @@ function MusicArtistSongs(props) {
   const [m0, setM0] = useState([]);
 
   useEffect(() => {
+    let isMount = true;
     fetch(
       `https://genius.p.rapidapi.com/artists/${props.data}/songs?sort=${props.sort}&page=${props.page}&per_page=${props.per_page}`,
       {
@@ -18,10 +19,16 @@ function MusicArtistSongs(props) {
     ).then((res) => {
       res.json().then((resp) => {
         // console.log(resp);
-        let apidata = resp.response.songs;
-        setM0(apidata);
+        if (isMount) {
+          let apidata = resp.response.songs;
+          setM0(apidata);
+        }
       });
     });
+
+    return () => {
+      isMount = false;
+    };
   }, [props.data, props.sort, props.page, props.per_page]);
 
   return (
