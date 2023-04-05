@@ -3,28 +3,31 @@ import { Link } from "react-router-dom";
 
 function MusicArtistSongs(props) {
   const [m0, setM0] = useState([]);
-
+  // artist id = 344497
   useEffect(() => {
     let isMount = true;
+
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
+        "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
+      },
+    };
+
     fetch(
-      `https://genius.p.rapidapi.com/artists/${props.data}/songs?sort=${props.sort}&page=${props.page}&per_page=${props.per_page}`,
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "genius.p.rapidapi.com",
-          "x-rapidapi-key":
-            "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
-        },
-      }
-    ).then((res) => {
-      res.json().then((resp) => {
-        // console.log(resp);
+      `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${props.data}&per_page=${props.per_page}&page=${props.page}`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response.songs);
         if (isMount) {
-          let apidata = resp.response.songs;
+          let apidata = response.songs;
           setM0(apidata);
         }
-      });
-    });
+      })
+      .catch((err) => console.error(err));
 
     return () => {
       isMount = false;
@@ -36,7 +39,7 @@ function MusicArtistSongs(props) {
       {m0.map((data, i) => (
         <div className="music-card-content" key={i}>
           <Link
-            to={`/react-music.com/listen/${data.primary_artist.id}/${data.primary_artist.name}/${i}`}
+            to={`/react-music.com/listen/${data.primary_artist.id}/${data.primary_artist.name}/${data.id}`}
           >
             <div className="music-card b-radius c-hover">
               <img

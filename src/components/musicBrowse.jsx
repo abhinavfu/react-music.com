@@ -5,16 +5,16 @@ import MusicArtistSongs from "./musicArtistSongs";
 function MusicBrowse() {
   const artistIdList = [
     { name: "Ariana Grande", id: 26507 },
-    { name: "Camila Cabello", id: 609667 },
-    { name: "Atif Aslam", id: 357955 },
-    { name: "Justin Bieber", id: 357 },
-    { name: "ZAYN", id: 339472 },
-    { name: "Sia", id: 16775 },
-    { name: "Harry Styles", id: 22457 },
-    { name: "BTS", id: 70113 },
-    { name: "Taylor Swift", id: 1177 },
-    { name: "Ed Sheeran", id: 12418 },
-    { name: "Christina Aguilera", id: 1211 },
+    // { name: "Camila Cabello", id: 609667 },
+    // { name: "Atif Aslam", id: 357955 },
+    // { name: "Justin Bieber", id: 357 },
+    // { name: "ZAYN", id: 339472 },
+    // { name: "Sia", id: 16775 },
+    // { name: "Harry Styles", id: 22457 },
+    // { name: "BTS", id: 70113 },
+    // { name: "Taylor Swift", id: 1177 },
+    // { name: "Ed Sheeran", id: 12418 },
+    // { name: "Christina Aguilera", id: 1211 },
     // {name:"Katy Perry", id:1195},
     // {name:"Rihanna", id:89},
     // {name:"Zara Larsson", id:55903},
@@ -75,44 +75,3 @@ function MusicBrowse() {
 }
 
 export default MusicBrowse;
-
-// ================================[[ Main API ]]===============================
-
-// // ======================================================
-// const artistId = 16775;
-// const sort = "popularity";
-// const page = 1;
-// const per_page = 20;
-// // ======================================================
-
-// // 1) RAPID API Artists Songs
-// useEffect(()=>{
-//     fetch(`https://genius.p.rapidapi.com/artists/${artistId}/songs?sort=${sort}&page=${page}&per_page=${per_page}`, {
-//         "method": "GET",
-//         "headers": {
-//             "x-rapidapi-host": "genius.p.rapidapi.com",
-//             "x-rapidapi-key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf"
-//         }
-//         }).then((res)=>{res.json().then((resp)=>{
-//             console.log(resp);
-//             let apidata = resp.response.songs;
-//             setMusicList(apidata)
-//         })})
-// },[]);
-
-// // 2) RAPID API Artists
-// useEffect(()=>{
-//     // fetch("https://genius.p.rapidapi.com/artists/16775?text_format=as", {
-//     fetch(`https://genius.p.rapidapi.com/artists/${artistId}`, {
-//         "method": "GET",
-//         "headers": {
-//             "x-rapidapi-host": "genius.p.rapidapi.com",
-//             "x-rapidapi-key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf"
-//         }
-//         }).then((res)=>{res.json().then((resp)=>{
-//             // console.log(resp);
-//             let apidata = resp.response.artist;
-//             setArtistsList(apidata)
-//             console.log(apidata)
-//         })})
-// },[]);
