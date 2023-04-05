@@ -21,7 +21,7 @@ function Music() {
       <React.Fragment>
         <ul>
           <li>
-            <Link to="/react-music.com/listen/:id/:name/:i">
+            <Link to="/react-music.com/listen/16775/Sia/2849661">
               <div>
                 <svg
                   width="24px"

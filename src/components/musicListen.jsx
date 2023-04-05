@@ -6,6 +6,7 @@ function MusicListen() {
   const [songs, setSongs] = useState([]);
   const [count, setCount] = useState(0);
   const [perPage, setPerPage] = useState(10);
+  const [sort, setSort] = useState("popularity");
   const [current, setCurrent] = useState(0);
   const [songimg, setSongimg] = useState(pandaImg);
 
@@ -19,21 +20,26 @@ function MusicListen() {
     return elm !== "";
   });
   artistName = artistName.join(" ");
-  const [trackId, setTrackId] = useState(words[7]);
-  // trackId = words[7];
+  const [trackId, setTrackId] = useState("2849661");
   // ===== Set artist Id =====
   let songId = words[5];
-  function cleanId() {
-    if (songId === ":id") {
-      songId = 16775;
-      trackId = 2849661;
-      artistName = "Sia";
-      return songId & trackId & artistName;
-    } else {
-      return songId;
+  var tracknum = words[7];
+  // location.reload();
+  useEffect(() => {
+    function cleanId() {
+      if (songId === ":id") {
+        songId = 16775;
+        // setTrackId("2849661");
+        artistName = "Sia";
+        return songId & artistName;
+      } else {
+        setTrackId(words[7]);
+        return songId;
+      }
     }
-  }
-  cleanId();
+    cleanId();
+    setTrackId(tracknum);
+  }, [tracknum]);
   // ========================= Fetch Song Track =========================
   // const sort = shuffle;
   const page = 1;
@@ -51,7 +57,7 @@ function MusicListen() {
     };
     // artist id = { name: "Sia", id: 16775 },
     fetch(
-      `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${songId}&per_page=${per_page}&page=${page}`,
+      `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${songId}&per_page=${per_page}&page=${page}&sort=${sort}`,
       options
     )
       .then((response) => response.json())
@@ -67,7 +73,7 @@ function MusicListen() {
     return () => {
       isMount = false;
     };
-  }, [songId, page, per_page]);
+  }, [songId, page, per_page, sort]);
 
   useEffect(() => {
     let isMount = true;
@@ -193,10 +199,29 @@ function MusicListen() {
   // }, [setPause, play, pause]);
   // ======= Song Selection ======
   let flag = current;
+  // let xx = 22;
+  var xx = 22;
   function songSelect(a) {
-    setCurrent(a);
-    // setTrackId(a)
+    xx = a;
+    console.log("inner", a, xx);
+    return toString(a);
   }
+  xx = xx;
+  var k = songSelect();
+
+  console.log("function d", k);
+  console.log("function", songSelect());
+  console.log("function return", xx);
+  console.log("outer", xx);
+  useEffect(() => {
+    xx = songSelect();
+    console.log("useEffect", xx);
+    if (xx === undefined) {
+      setTrackId(6071429);
+    } else {
+      // setTrackId(xx);
+    }
+  });
   function songRange(num) {
     if (num === len) {
       flag = 0;
@@ -335,21 +360,23 @@ function MusicListen() {
                   <div
                     className="songslist b-radius"
                     key={a}
-                    onLoad={() => songImg(j.song_art_image_thumbnail_url)}
-                    onClick={() =>
-                      songImg(j.song_art_image_thumbnail_url) & songSelect(a)
-                    }
+                    // onLoad={() => songImg(j.song_art_image_thumbnail_url)}
+                    onClick={() => songSelect(j.id)}
                   >
-                    <div className="song-card b-radius">
-                      <img
-                        src={j.song_art_image_thumbnail_url}
-                        alt="Song Thumbnail"
-                      />
-                    </div>
-                    <div className="songdetail">
-                      <p>{j.full_title}</p>
-                      <p>Released Date : {j.release_date_for_display}</p>
-                    </div>
+                    <Link
+                      to={`/react-music.com/listen/${j.primary_artist.id}/${j.primary_artist.name}/${j.id}`}
+                    >
+                      <div className="song-card b-radius">
+                        <img
+                          src={j.song_art_image_thumbnail_url}
+                          alt="Song Thumbnail"
+                        />
+                      </div>
+                      <div className="songdetail">
+                        <p>{j.full_title}</p>
+                        <p>Released Date : {j.release_date_for_display}</p>
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </div>

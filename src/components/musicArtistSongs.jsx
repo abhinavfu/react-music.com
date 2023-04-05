@@ -16,7 +16,7 @@ function MusicArtistSongs(props) {
     };
 
     fetch(
-      `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${props.data}&per_page=${props.per_page}&page=${props.page}`,
+      `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${props.data}&per_page=${props.per_page}&page=${props.page}&sort=${props.sort}`,
       options
     )
       .then((response) => response.json())
