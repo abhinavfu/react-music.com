@@ -173,8 +173,15 @@ function MusicListen() {
   // ======= Song Selection ======
   var flag = words[8];
   function songSelect(id) {
+    tracknum = id;
     return id;
   }
+
+  useEffect(() => {
+    // console.log(tracknum);
+    setTrackId(tracknum);
+  }, [tracknum]);
+
   function songRange(num, len) {
     if (num === len) {
       flag = 0;
