@@ -171,7 +171,8 @@ function MusicListen() {
   // }, [setPause, play, pause]);
 
   // ======= Song Selection ======
-  var flag = words[8];
+  // var flag = words[8];
+  var flag = 0;
   function songSelect(id) {
     tracknum = id;
     return id;
@@ -320,9 +321,7 @@ function MusicListen() {
               <div>
                 {songs.map((j, a) => (
                   <Link
-                    to={`/react-music.com/listen/${j.primary_artist.id}/${
-                      j.primary_artist.name
-                    }/${j.id}/${a + 1}`}
+                    to={`/react-music.com/listen/${j.primary_artist.id}/${j.primary_artist.name}/${j.id}`}
                   >
                     <div
                       className="songslist b-radius"
