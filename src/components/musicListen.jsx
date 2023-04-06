@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import pandaImg from "./panda.svg";
 function MusicListen() {
   const [track, setTrack] = useState([]);
   const [songs, setSongs] = useState([]);
+  const [trackId, setTrackId] = useState("2849661");
   const [count, setCount] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [sort, setSort] = useState("popularity");
-  const [current, setCurrent] = useState(0);
-  const [songimg, setSongimg] = useState(pandaImg);
 
   let URLValue = window.location.href;
   let textID = `${URLValue}`;
@@ -20,28 +18,13 @@ function MusicListen() {
     return elm !== "";
   });
   artistName = artistName.join(" ");
-  const [trackId, setTrackId] = useState("2849661");
   // ===== Set artist Id =====
   let songId = words[5];
   var tracknum = words[7];
-  // location.reload();
   useEffect(() => {
-    function cleanId() {
-      if (songId === ":id") {
-        songId = 16775;
-        // setTrackId("2849661");
-        artistName = "Sia";
-        return songId & artistName;
-      } else {
-        setTrackId(words[7]);
-        return songId;
-      }
-    }
-    cleanId();
     setTrackId(tracknum);
   }, [tracknum]);
   // ========================= Fetch Song Track =========================
-  // const sort = shuffle;
   const page = 1;
   const per_page = perPage;
 
@@ -115,9 +98,8 @@ function MusicListen() {
     },
   ];
 
-  let len = perPage; //album length
   // ===== Set selection no. =====
-  const [sNum, setsNum] = useState(0);
+  // const [sNum, setsNum] = useState(0);
   // let songNum = words[7];
   // function cleanNum() {
   //   if (songNum === ":i") {
@@ -150,16 +132,6 @@ function MusicListen() {
   //   setsNum(parseInt(songNum));
   // }, [setPerPage, songNum]);
 
-  function songImg(song_art_image_url) {
-    if (song_art_image_url === undefined) {
-      setSongimg(pandaImg);
-    }
-    if (songimg === undefined) {
-      setSongimg(pandaImg);
-    } else {
-      setCurrent(0);
-    }
-  }
   // ===== Artist name (svg or h2) =====
   const [nLen, setNLen] = useState(true);
   useEffect(() => {
@@ -171,22 +143,22 @@ function MusicListen() {
       setNLen(true);
     }
   }, [setNLen, artistName]);
+
   // ===== Shuffle (sort) button =====
 
-  // const [shuffle, setShuffle] = useState("popularity");
-  // useEffect(() => {
-  //   let x = count;
-  //   if (x % 2 !== 0) {
-  //     setShuffle("title");
-  //   }
-  //   if (x % 2 === 0) {
-  //     setShuffle("popularity");
-  //   }
-  // }, [setShuffle, count]);
+  useEffect(() => {
+    let x = count;
+    if (x % 2 !== 0) {
+      setSort("title");
+    }
+    if (x % 2 === 0) {
+      setSort("popularity");
+    }
+  }, [setSort, count]);
 
   // ============== Play Pause btn =============
   const [play, setPlay] = useState(0);
-  const [pause, setPause] = useState("0s");
+  // const [pause, setPause] = useState("0s");
   // useEffect(() => {
   //   let pbar = document.getElementById("pbar");
   //   let x = play;
@@ -197,32 +169,13 @@ function MusicListen() {
   //   }
   //   setPlay(x);
   // }, [setPause, play, pause]);
-  // ======= Song Selection ======
-  let flag = current;
-  // let xx = 22;
-  var xx = 22;
-  function songSelect(a) {
-    xx = a;
-    console.log("inner", a, xx);
-    return toString(a);
-  }
-  xx = xx;
-  var k = songSelect();
 
-  console.log("function d", k);
-  console.log("function", songSelect());
-  console.log("function return", xx);
-  console.log("outer", xx);
-  useEffect(() => {
-    xx = songSelect();
-    console.log("useEffect", xx);
-    if (xx === undefined) {
-      setTrackId(6071429);
-    } else {
-      // setTrackId(xx);
-    }
-  });
-  function songRange(num) {
+  // ======= Song Selection ======
+  var flag = words[8];
+  function songSelect(id) {
+    return id;
+  }
+  function songRange(num, len) {
     if (num === len) {
       flag = 0;
       num = 0;
@@ -233,9 +186,11 @@ function MusicListen() {
     }
   }
   function controller(x) {
-    flag = flag + x;
-    songRange(flag);
-    setCurrent(flag);
+    flag = flag + x - 1;
+    var len = 10;
+    // var len = track.albums.length;
+    // setTrackId(track.albums[flag].id);
+    songRange(flag, len);
   }
   songRange(flag);
   // ====================== X ======================
@@ -357,14 +312,16 @@ function MusicListen() {
               <p>Verified Artist</p>
               <div>
                 {songs.map((j, a) => (
-                  <div
-                    className="songslist b-radius"
-                    key={a}
-                    // onLoad={() => songImg(j.song_art_image_thumbnail_url)}
-                    onClick={() => songSelect(j.id)}
+                  <Link
+                    to={`/react-music.com/listen/${j.primary_artist.id}/${
+                      j.primary_artist.name
+                    }/${j.id}/${a + 1}`}
                   >
-                    <Link
-                      to={`/react-music.com/listen/${j.primary_artist.id}/${j.primary_artist.name}/${j.id}`}
+                    <div
+                      className="songslist b-radius"
+                      key={a}
+                      // onLoad={() => songSelect(j.id)}
+                      onClick={songSelect(j.id)}
                     >
                       <div className="song-card b-radius">
                         <img
@@ -376,8 +333,8 @@ function MusicListen() {
                         <p>{j.full_title}</p>
                         <p>Released Date : {j.release_date_for_display}</p>
                       </div>
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
