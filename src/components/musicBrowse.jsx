@@ -5,12 +5,12 @@ import MusicArtistSongs from "./musicArtistSongs";
 function MusicBrowse() {
   const artistIdList = [
     { name: "Ariana Grande", id: 26507 },
-    // { name: "Camila Cabello", id: 609667 },
-    // { name: "Atif Aslam", id: 357955 },
-    // { name: "Justin Bieber", id: 357 },
-    // { name: "ZAYN", id: 339472 },
-    // { name: "Sia", id: 16775 },
-    // { name: "Harry Styles", id: 22457 },
+    { name: "Camila Cabello", id: 609667 },
+    { name: "Atif Aslam", id: 357955 },
+    { name: "Justin Bieber", id: 357 },
+    { name: "ZAYN", id: 339472 },
+    { name: "Sia", id: 16775 },
+    { name: "Harry Styles", id: 22457 },
     // { name: "BTS", id: 70113 },
     // { name: "Taylor Swift", id: 1177 },
     // { name: "Ed Sheeran", id: 12418 },
