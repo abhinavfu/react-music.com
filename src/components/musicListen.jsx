@@ -327,7 +327,7 @@ function MusicListen() {
                       className="songslist b-radius"
                       key={a}
                       // onLoad={() => songSelect(j.id)}
-                      onClick={songSelect(j.id)}
+                      // onClick={songSelect(j.id)}
                     >
                       <div className="song-card b-radius">
                         <img
