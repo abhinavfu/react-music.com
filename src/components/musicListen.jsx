@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 function MusicListen() {
   const [track, setTrack] = useState([]);
   const [songs, setSongs] = useState([]);
+  const [spotify, setSpotify] = useState('');
   const [trackId, setTrackId] = useState("2849661");
   const [count, setCount] = useState(0);
   const [perPage, setPerPage] = useState(10);
@@ -87,7 +88,35 @@ function MusicListen() {
       isMount = false;
     };
   }, [trackId]);
+  
+  // ========================= spotify play =========================
+  useEffect(() => {
+    let isMount = true;
+    let ids = track['spotify_uuid']
+    // ids =  4WNcduiCmDNfmTEz7JvmLv
+    const url = `https://spotify23.p.rapidapi.com/tracks/?ids=${ids}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf',
+        'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+      }
+    };
+    fetch(url, options)
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response.tracks[0]);
+      if (isMount) {
+        let apidata = response.tracks[0];
+        setSpotify(apidata);
+      }
+    })
+    .catch((err) => console.error(err));
 
+    return () => {
+      isMount = false;
+    };
+  }, [track]);
   // ========================= Fetch Song Track end =========================
   const trackDetails = [
     {
@@ -97,40 +126,6 @@ function MusicListen() {
       image: track.song_art_image_url,
     },
   ];
-
-  // ===== Set selection no. =====
-  // const [sNum, setsNum] = useState(0);
-  // let songNum = words[7];
-  // function cleanNum() {
-  //   if (songNum === ":i") {
-  //     songNum = 0;
-  //     return songNum;
-  //   } else if (sNum >= len) {
-  //     return (songNum = 0);
-  //   } else {
-  //     return songNum;
-  //   }
-  // }
-  // cleanNum();
-
-  // useEffect(() => {
-  //   if (songNum > 9) {
-  //     setPerPage(20);
-  //   }
-  //   if (songNum > 19) {
-  //     setPerPage(30);
-  //   }
-  //   if (songNum > 29) {
-  //     setPerPage(40);
-  //   }
-  //   if (songNum > 39) {
-  //     setPerPage(50);
-  //   }
-  //   if (songNum > 49) {
-  //     setPerPage(60);
-  //   }
-  //   setsNum(parseInt(songNum));
-  // }, [setPerPage, songNum]);
 
   // ===== Artist name (svg or h2) =====
   const [nLen, setNLen] = useState(true);
@@ -219,9 +214,10 @@ function MusicListen() {
                 </div>
                 <img src={i.image} alt="album art" />
               </div>
-              <div className="musicbar">
+              <audio src={spotify.preview_url} controls></audio>
+              {/* <div className="musicbar">
                 <div id="pbar" className="progressbar"></div>
-              </div>
+              </div> */}
               <div className="music-btn">
                 <div onClick={() => setCount(count + 1)}>
                   <svg
