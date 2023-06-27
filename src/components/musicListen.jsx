@@ -91,7 +91,6 @@ function MusicListen() {
   
   // ========================= spotify play =========================
   useEffect(() => {
-    let isMount = true;
     let ids = track['spotify_uuid']
     // ids =  4WNcduiCmDNfmTEz7JvmLv
     const url = `https://spotify23.p.rapidapi.com/tracks/?ids=${ids}`;
@@ -105,17 +104,10 @@ function MusicListen() {
     fetch(url, options)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response.tracks[0]);
-      if (isMount) {
-        let apidata = response.tracks[0];
-        setSpotify(apidata);
-      }
+      setSpotify(response.tracks[0]['preview_url']);
     })
     .catch((err) => console.error(err));
 
-    return () => {
-      isMount = false;
-    };
   }, [track]);
   // ========================= Fetch Song Track end =========================
   const trackDetails = [
@@ -214,7 +206,7 @@ function MusicListen() {
                 </div>
                 <img src={i.image} alt="album art" />
               </div>
-              <audio src={spotify.preview_url} controls></audio>
+              <audio src={spotify} controls></audio>
               {/* <div className="musicbar">
                 <div id="pbar" className="progressbar"></div>
               </div> */}
