@@ -45,19 +45,23 @@ function MusicBrowse() {
           </div>
           <div className="div50">
             <p>LATEST UPDATED</p>
-            <p>Attends BRIT Awards 2021</p>
-            <p>Olivia Rodrigo</p>
+            <p>Taylor Swift wins nine Awards</p>
+            <p>Taylor Swift</p>
             <div className="c-img b-radius c-hover">
               <img
-                src="https://assets.teenvogue.com/photos/609c026e7165b07169ad92f8/16:9/w_2560%2Cc_limit/GettyImages-1317474859.jpg"
-                alt="Olivia Rodrigo in BRIT Awards 2021"
+                src="https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/13/full/1694595362-0387.png"
+                alt="Taylor Swift wins nine Awards"
               />
             </div>
           </div>
         </div>
         {artistIdList.map((exx, a) => (
           <div className="container" key={a}>
-            <h3>{exx.name}</h3>
+            <h3>
+              <Link to={`/react-music.com/artist/${exx.id}/${exx.name}`}>
+                {exx.name}
+              </Link>
+            </h3>
             <Link to={`/react-music.com/artist/${exx.id}/${exx.name}`}>
               <p className="seeAll">See All</p>
             </Link>

@@ -8,6 +8,7 @@ import MusicFooter from "./musicFooter";
 import MusicLogo from "./musicLogo";
 import { Switch, Route, Link } from "react-router-dom";
 import MusicArtistPage from "./musicArtistPage";
+import MusicArtistAlbums from "./musicArtistAlbums";
 
 function Music() {
   // =============== MUSIC.com Homepage ===============
@@ -178,6 +179,9 @@ function Music() {
           </Route>
           <Route path="/react-music.com/artist">
             <MusicArtistPage />
+          </Route>
+          <Route path="/react-music.com/albums">
+            <MusicArtistAlbums />
           </Route>
           <Route path="/react-music.com/about">
             <MusicLogo />

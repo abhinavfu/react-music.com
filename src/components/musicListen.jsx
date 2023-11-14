@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 function MusicListen() {
   const [track, setTrack] = useState([]);
+  const [lyrics, setLyrics] = useState([]);
+  const [lyrics2, setLyrics2] = useState([]);
   const [songs, setSongs] = useState([]);
   const [spotify, setSpotify] = useState('');
   const [trackId, setTrackId] = useState("2849661");
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(1); // 10
   const [sort, setSort] = useState("popularity");
 
   let URLValue = window.location.href;
@@ -29,16 +31,17 @@ function MusicListen() {
   const page = 1;
   const per_page = perPage;
 
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
+      "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
+    },
+  };
+  // ----------- Songs -------------
   useEffect(() => {
     let isMount = true;
 
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
-        "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
-      },
-    };
     // artist id = { name: "Sia", id: 16775 },
     fetch(
       `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${songId}&per_page=${per_page}&page=${page}&sort=${sort}`,
@@ -48,7 +51,7 @@ function MusicListen() {
       .then((response) => {
         // console.log(response.songs);
         if (isMount) {
-          let apidata = response.songs;
+          let apidata = response['songs'];
           setSongs(apidata);
         }
       })
@@ -59,16 +62,10 @@ function MusicListen() {
     };
   }, [songId, page, per_page, sort]);
 
+  // ----------- Song -------------
   useEffect(() => {
     let isMount = true;
 
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
-        "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
-      },
-    };
     // song track id=2396871
     fetch(
       `https://genius-song-lyrics1.p.rapidapi.com/song/details/?id=${trackId}`,
@@ -78,7 +75,7 @@ function MusicListen() {
       .then((response) => {
         // console.log(response.song);
         if (isMount) {
-          let apidata = response.song;
+          let apidata = response['song'];
           setTrack(apidata);
         }
       })
@@ -88,7 +85,45 @@ function MusicListen() {
       isMount = false;
     };
   }, [trackId]);
-  
+
+  // ----------- Song Lyrics -------------
+  useEffect(() => {
+    let isMount = true;
+    
+    fetch(
+      `https://genius-song-lyrics1.p.rapidapi.com/song/lyrics/?id=${trackId}`,
+      options
+      )
+      .then((response) => response.json())
+      .then((response) => {
+        if (isMount) {
+          // let apidata = response['lyrics'];
+          let apidata = response['lyrics']['lyrics']['body']['html'];
+          let apidata2 = response['lyrics']['tracking_data'];
+          setLyrics(apidata);
+          setLyrics2(apidata2);
+        }
+      })
+      .catch((err) => console.error(err));
+      
+      return () => {
+        isMount = false;
+      };
+    }, [trackId]);
+    const refLyrics = useRef(null);
+    if (refLyrics.current){
+      const element = refLyrics.current;
+      element.innerHTML = lyrics
+    }
+    
+    const lyricsx = [
+      {
+        primary_artist: lyrics2['primary_artist'],
+        primary_album: lyrics2['primary_album'],
+        tag: lyrics2['tag'],
+        release_date: lyrics2['release_date'],
+      },
+    ];
   // ========================= spotify play =========================
   useEffect(() => {
     let ids = track['spotify_uuid']
@@ -104,7 +139,7 @@ function MusicListen() {
     fetch(url, options)
     .then((response) => response.json())
     .then((response) => {
-      setSpotify(response.tracks[0]['preview_url']);
+      setSpotify(response['tracks'][0]['preview_url']);
     })
     .catch((err) => console.error(err));
 
@@ -192,11 +227,9 @@ function MusicListen() {
 
   return (
     <React.Fragment>
+      <div>
       {trackDetails.map((i) => (
         <div id="songSection" style={{ backgroundImage: `url(${i.image})` }}>
-          <div className="note">
-            <p>Note: Don't have access to play music.</p>
-          </div>
           <div className="song-box">
             <div className="music-panel">
               <div className="song-img">
@@ -335,6 +368,27 @@ function MusicListen() {
           </div>
         </div>
       ))}
+        <div id="lyrics">
+          <h2>Lyrics</h2>
+          <div className="container">
+            <div ref={refLyrics} id="b"></div>
+          </div>
+          {lyrics ? (<p>Lyrics source by Genius - Song Lyrics</p>):(<p>No Lyrics Found.</p>)}
+          <div className="container songinfo">
+            {/* {lyrics2.primary_artist} */}
+            {lyricsx.map((i,a)=>(
+            <table key={a}>
+              <tbody>
+              <tr><th>Artist</th><td>{i.primary_artist}</td></tr>
+              <tr><th>Album</th><td>{i.primary_album}</td></tr>
+              <tr><th>Genre</th><td>{i.tag}</td></tr>
+              <tr><th>Released</th><td>{i.release_date}</td></tr>
+              </tbody>
+            </table>
+            ))}
+          </div>
+        </div>
+      </div>
     </React.Fragment>
   );
 }
