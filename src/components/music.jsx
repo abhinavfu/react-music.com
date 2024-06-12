@@ -6,11 +6,11 @@ import MusicRadio from "./musicRadio";
 import MusicSearch from "./musicSearch";
 import MusicFooter from "./musicFooter";
 import MusicLogo from "./musicLogo";
-import { Switch, Route, Link } from "react-router-dom";
+import {Routes, Route, Link } from "react-router-dom";
 import MusicArtistPage from "./musicArtistPage";
 import MusicArtistAlbums from "./musicArtistAlbums";
 
-function Music() {
+function Music(props) {
   // =============== MUSIC.com Homepage ===============
 
   // ====== Menu toggle btn =====
@@ -164,32 +164,16 @@ function Music() {
         </div>
       </section>
       <section className="sectionArea" onClick={() => setmenuShow(false)}>
-        <Switch>
-          <Route path="/react-music.com/listen">
-            <MusicListen />
-          </Route>
-          <Route path="/react-music.com" exact={true}>
-            <MusicBrowse />
-          </Route>
-          <Route path="/react-music.com/radio">
-            <MusicRadio />
-          </Route>
-          <Route path="/react-music.com/search">
-            <MusicSearch />
-          </Route>
-          <Route path="/react-music.com/artist">
-            <MusicArtistPage />
-          </Route>
-          <Route path="/react-music.com/albums">
-            <MusicArtistAlbums />
-          </Route>
-          <Route path="/react-music.com/about">
-            <MusicLogo />
-          </Route>
-          <Route path="*">
-            <PageNotFound />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/react-music.com/listen/:id/:name/:songid" element={<MusicListen API_Fetch={props.API_Fetch} />}/>
+          <Route path="/react-music.com" exact={true} element={<MusicBrowse API_Fetch={props.API_Fetch} />}/>
+          <Route path="/react-music.com/radio" element={<MusicRadio />}/>
+          <Route path="/react-music.com/search" element={<MusicSearch API_Fetch={props.API_Fetch} />}/>
+          <Route path="/react-music.com/artist/:id/:artist" element={<MusicArtistPage API_Fetch={props.API_Fetch} />}/>
+          <Route path="/react-music.com/albums/:id" element={<MusicArtistAlbums API_Fetch={props.API_Fetch} />}/>
+          <Route path="/react-music.com/about" element={<MusicLogo />}/>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
         <MusicFooter />
       </section>
     </React.Fragment>

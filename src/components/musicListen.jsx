@@ -1,14 +1,28 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-function MusicListen() {
-  const [track, setTrack] = useState([]);
-  const [lyrics, setLyrics] = useState([]);
-  const [lyrics2, setLyrics2] = useState([]);
-  const [songs, setSongs] = useState([]);
+import testimg from './panda.svg'
+
+function MusicListen(props) {
+  const API_Fetch = props.API_Fetch;
+  const [track, setTrack] = useState({
+                                    'title': 'Test title',
+                                    'id': '1',
+                                    'artist_names': 'Test artist_names',
+                                    'song_art_image_url': testimg,
+                                    "primary_artist":{"id":"1","name":"Test Artist name"}
+                                    });
+  const [lyrics, setLyrics] = useState("<p>Test Lyrics</p><p>----------</p><p>la la la la laa</p><p>la la la la laa</p><p>laa laa laa laa</p>");
+  const [lyrics2, setLyrics2] = useState({"primary_artist":"Test primary_artist","primary_album":"Test primary_album","tag":"Test tag","release_date":"Test release_date",});
+  const [songs, setSongs] = useState([
+                                      {"id":"1","full_title":"Test full_title 1","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"1","name":"Test Artist name"}},
+                                      {"id":"2","full_title":"Test full_title 2","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"2","name":"Test Artist name"}},
+                                      {"id":"3","full_title":"Test full_title 3","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"3","name":"Test Artist name"}},
+                                      {"id":"4","full_title":"Test full_title 4","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"4","name":"Test Artist name"}},
+                                    ]);
   const [spotify, setSpotify] = useState('');
   const [trackId, setTrackId] = useState("2849661");
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(1); // 10
+  const [perPage, setPerPage] = useState(10); // 10
   const [sort, setSort] = useState("popularity");
 
   let URLValue = window.location.href;
@@ -31,21 +45,15 @@ function MusicListen() {
   const page = 1;
   const per_page = perPage;
 
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
-      "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
-    },
-  };
   // ----------- Songs -------------
   useEffect(() => {
     let isMount = true;
 
     // artist id = { name: "Sia", id: 16775 },
     fetch(
-      `https://genius-song-lyrics1.p.rapidapi.com/artist/songs/?id=${songId}&per_page=${per_page}&page=${page}&sort=${sort}`,
-      options
+      `${API_Fetch["api-url"]}/artist/songs/?id=${songId}&per_page=${per_page}&page=${page}&sort=${sort}`,
+      {method: "GET",
+        headers: API_Fetch["headers"]}
     )
       .then((response) => response.json())
       .then((response) => {
@@ -68,8 +76,9 @@ function MusicListen() {
 
     // song track id=2396871
     fetch(
-      `https://genius-song-lyrics1.p.rapidapi.com/song/details/?id=${trackId}`,
-      options
+      `${API_Fetch["api-url"]}/song/details/?id=${trackId}`,
+      {method: "GET",
+        headers: API_Fetch["headers"]}
     )
       .then((response) => response.json())
       .then((response) => {
@@ -91,8 +100,9 @@ function MusicListen() {
     let isMount = true;
     
     fetch(
-      `https://genius-song-lyrics1.p.rapidapi.com/song/lyrics/?id=${trackId}`,
-      options
+      `${API_Fetch["api-url"]}/song/lyrics/?id=${trackId}`,
+      {method: "GET",
+        headers: API_Fetch["headers"]}
       )
       .then((response) => response.json())
       .then((response) => {
@@ -132,7 +142,7 @@ function MusicListen() {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': '0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf',
+        "X-RapidAPI-Key" :API_Fetch["X-RapidAPI-Key"],
         'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
       }
     };
@@ -143,14 +153,14 @@ function MusicListen() {
     })
     .catch((err) => console.error(err));
 
-  }, [track]);
+  }, []);
   // ========================= Fetch Song Track end =========================
   const trackDetails = [
     {
-      title: track.title,
-      id: track.id,
-      artist: track.artist_names,
-      image: track.song_art_image_url,
+      title: track?.title,
+      id: track?.id,
+      artist: track?.artist_names,
+      image: track?.song_art_image_url,
     },
   ];
 
@@ -195,15 +205,6 @@ function MusicListen() {
   // ======= Song Selection ======
   // var flag = words[8];
   var flag = 0;
-  function songSelect(id) {
-    tracknum = id;
-    return id;
-  }
-
-  useEffect(() => {
-    // console.log(tracknum);
-    setTrackId(tracknum);
-  }, [tracknum]);
 
   function songRange(num, len) {
     if (num === len) {
@@ -215,11 +216,12 @@ function MusicListen() {
       num = len - 1;
     }
   }
+  // 0 1 2 [3] 4 5
   function controller(x) {
     flag = flag + x - 1;
     var len = 10;
-    // var len = track.albums.length;
-    // setTrackId(track.albums[flag].id);
+    // var len = songs.length;
+    // setTrackId(songs[flag].id);
     songRange(flag, len);
   }
   songRange(flag);
@@ -227,8 +229,8 @@ function MusicListen() {
 
   return (
     <React.Fragment>
-      <div>
-      {trackDetails.map((i) => (
+      <div style={{minHeight:"65vh"}}>
+      {trackDetails?.map((i) => (
         <div id="songSection" style={{ backgroundImage: `url(${i.image})` }}>
           <div className="song-box">
             <div className="music-panel">
@@ -333,32 +335,33 @@ function MusicListen() {
                     </text>
                   </svg>
                 ) : (
-                  <Link to="/react-music.com/artist">
+                  <Link to={`/react-music.com/artist/${track?.primary_artist?.id}/${track?.primary_artist?.name}`}>
                     <p>{artistName}</p>
                   </Link>
                 )}
               </h2>
               <p>Verified Artist</p>
               <div>
-                {songs.map((j, a) => (
+                {songs?.map((j, a) => (
                   <Link
-                    to={`/react-music.com/listen/${j.primary_artist.id}/${j.primary_artist.name}/${j.id}`}
+                    to={`/react-music.com/listen/${j?.primary_artist.id}/${j?.primary_artist.name}/${j?.id}`}
                   >
                     <div
                       className="songslist b-radius"
                       key={a}
-                      // onLoad={() => songSelect(j.id)}
-                      // onClick={songSelect(j.id)}
+                      // onLoad={() => songSelect(j?.id)}
+                      // onClick={songSelect(j?.id)}
+                      onClick={()=>setTrackId(j?.id)}
                     >
                       <div className="song-card b-radius">
                         <img
-                          src={j.song_art_image_thumbnail_url}
+                          src={j?.song_art_image_thumbnail_url}
                           alt="Song Thumbnail"
                         />
                       </div>
                       <div className="songdetail">
-                        <p>{j.full_title}</p>
-                        <p>Released Date : {j.release_date_for_display}</p>
+                        <p>{j?.full_title}</p>
+                        <p>Released Date : {j?.release_date_for_display}</p>
                       </div>
                     </div>
                   </Link>
@@ -376,7 +379,7 @@ function MusicListen() {
           {lyrics ? (<p>Lyrics source by Genius - Song Lyrics</p>):(<p>No Lyrics Found.</p>)}
           <div className="container songinfo">
             {/* {lyrics2.primary_artist} */}
-            {lyricsx.map((i,a)=>(
+            {lyricsx?.map((i,a)=>(
             <table key={a}>
               <tbody>
               <tr><th>Artist</th><td>{i.primary_artist}</td></tr>

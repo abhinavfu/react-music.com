@@ -7,9 +7,9 @@ function MusicRadio() {
     ]
     return ( 
         <React.Fragment>
-            <div id="radioSection">
+            <div id="radioSection" style={{minHeight:"65vh"}}>
                 <h1>Radio</h1>
-                <div className="container">
+                <div className="container-browse">
                     {radiolist.map((r,i)=>
                         <div className="div33" key={i}>
                             <p>{r.p1}</p>

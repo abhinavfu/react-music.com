@@ -3,7 +3,7 @@ import React from "react";
 function MusicLogo() {
   return (
     <React.Fragment>
-      <div id="logoSection">
+      <div id="logoSection" style={{minHeight:"65vh"}}>
         <div className="logobox">
           <h1>Music.com</h1>
           <h3>Discover new music every day.</h3>

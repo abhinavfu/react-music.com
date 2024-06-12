@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function MusicSearch() {
+function MusicSearch(props) {
+  const API_Fetch = props.API_Fetch;
+
   const [searchItem, setSearchList] = useState([]);
   const [data, setData] = useState("");
   const [hideShow, setHideShow] = useState(false);
-
   // Search Input Value
   function getData(val) {
     let zz = val.target.value;
@@ -22,24 +23,18 @@ function MusicSearch() {
   // RAPID API Search
   useEffect(() => {
     let isMount = true;
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf",
-        "X-RapidAPI-Host": "genius-song-lyrics1.p.rapidapi.com",
-      },
-    };
 
     // "https://genius-song-lyrics1.p.rapidapi.com/search/?q=%3CREQUIRED%3E&per_page=10&page=1",
     fetch(
-      `https://genius-song-lyrics1.p.rapidapi.com/search/?q=${data}&per_page=10&page=1`,
-      options
+      `${API_Fetch["api-url"]}/search/?q=${data}&per_page=10&page=1`,
+      {method: "GET",
+        headers: API_Fetch["headers"]}
     )
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);
         if (isMount) {
-          let apisearch = response.hits;
+          let apisearch = response["hits"];
           setSearchList(apisearch);
         }
         // console.log(apisearch)
@@ -49,11 +44,11 @@ function MusicSearch() {
     return () => {
       isMount = false;
     };
-  }, [data]);
+  }, [data, API_Fetch]);
 
   return (
     <React.Fragment>
-      <div id="searchSection" className="searchArea">
+      <div id="searchSection" className="searchArea"  style={{minHeight:"65vh"}}>
         <h1>Feel Free to Search Here</h1>
         <div className="container">
           <h3>Search</h3>
@@ -68,7 +63,7 @@ function MusicSearch() {
           {hideShow ? <h3>Top 10 Search results</h3> : null}
           {hideShow ? <p>See All</p> : null}
 
-          {searchItem.map((data, i) => (
+          {searchItem?.map((data, i) => (
             <div className="music-card-content" key={i}>
               <Link
                 to={`/react-music.com/listen/${data.result.primary_artist.id}/${data.result.primary_artist.name}/${data.result.id}`}

@@ -2,24 +2,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MusicArtistSongs from "./musicArtistSongs";
 
-function MusicBrowse() {
+function MusicBrowse(props) {
   const artistIdList = [
-    { name: "Ariana Grande", id: 26507 },
-    { name: "Camila Cabello", id: 609667 },
-    { name: "Atif Aslam", id: 357955 },
-    // { name: "Justin Bieber", id: 357 },
-    // { name: "ZAYN", id: 339472 },
-    // { name: "Sia", id: 16775 },
-    { name: "Harry Styles", id: 22457 },
-    { name: "BTS", id: 70113 },
+    { name: "Ariana Grande", id: 1 },
+    { name: "Lana Del Rey", id: 2 },
+    { name: "The Weeknd", id: 3 },
+    { name: "5 Seconds of Summer", id: 4 },
+    { name: "Bruno Mars", id: 5 },
+    { name: "Billie Eilish", id: 6 },
+    { name: "Harry Styles", id: 7 },
+    
+    // { name: "Ariana Grande", id: 26507 },
+    // { name: "Camila Cabello", id: 609667 },
+    // { name: "Atif Aslam", id: 357955 },
+    // { name: "Harry Styles", id: 22457 },
+    // { name:"Arijit Singh", id:205744 },
+    // { name: "BTS", id: 70113 },
     // { name: "Taylor Swift", id: 1177 },
     // { name: "Ed Sheeran", id: 12418 },
+    // { name: "ZAYN", id: 339472 },
+    // { name: "Sia", id: 16775 },
+    // { name: "Justin Bieber", id: 357 },
     // { name: "Christina Aguilera", id: 1211 },
     // {name:"Katy Perry", id:1195},
     // {name:"Rihanna", id:89},
     // {name:"Zara Larsson", id:55903},
     // {name:"Shawn Mendes", id:195029},
-    // {name:"Arijit Singh", id:205744},
   ];
   // console.log(artistIdList)
   // ======================================================
@@ -29,9 +37,9 @@ function MusicBrowse() {
 
   return (
     <React.Fragment>
-      <div id="browseSection">
+      <div id="browseSection" style={{minHeight:"65vh"}}>
         <h1>Browse</h1>
-        <div className="container">
+        <div className="container-browse">
           <div className="div50">
             <p>NEW IN POP</p>
             <p>Today's Hits rising star</p>
@@ -66,6 +74,7 @@ function MusicBrowse() {
               <p className="seeAll">See All</p>
             </Link>
             <MusicArtistSongs
+              API_Fetch={props.API_Fetch} 
               data={exx.id}
               sort={sort}
               page={page}

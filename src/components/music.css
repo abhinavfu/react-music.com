@@ -7,6 +7,7 @@
 :root {
   --text: rgb(245, 245, 245);
   --bg: rgb(30, 30, 30);
+  --bg-gray: rgba(128, 128, 128, 0.05);
   --text-gray: rgb(175, 175, 175);
   --border: rgba(150, 150, 150, 0.25);
   --hover: rgba(150, 150, 150, 0.1);
@@ -230,6 +231,11 @@ button:hover {
   width: 50px;
 }
 /* ===== Browse ===== */
+.container-browse {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 .div50 {
   width: 48%;
   float: left;
@@ -252,9 +258,11 @@ button:hover {
 .c-img {
   margin: 5px 0px;
   /* border: 1px solid var(--dull-red); */
+  background-color: var(--bg-gray);
   width: 100%;
   height: 70%;
   overflow: hidden;
+  min-height: 250px;
 }
 /* ================ Music Card ================== */
 .container h3 {
@@ -279,6 +287,7 @@ button:hover {
   width: 220px;
   height: 220px;
   /* border: 1px solid var(--dull-red); */
+  background-color: var(--bg-gray);
   overflow: hidden;
   margin: 5px 0px;
 }
@@ -293,9 +302,8 @@ button:hover {
 /* ===== Radio ===== */
 .div33 {
   width: 32%;
-  float: left;
   cursor: pointer;
-  margin-bottom: -50px;
+  padding: 10px 0px;
 }
 .div33 p {
   padding: 2px 0px;
@@ -311,13 +319,16 @@ button:hover {
   width: 100%;
   height: 70%;
   overflow: hidden;
+  min-height: 300px;
+  background-color: var(--bg-gray);
 }
 .div-blur {
   position: relative;
-  top: -95px;
+  bottom: 100px;
   background-color: rgba(100, 0, 0, 0.2);
   backdrop-filter: blur(5px);
   padding: 15px 10px;
+  z-index: 5;
 }
 .div-blur p:nth-child(1) {
   font-size: 15px;
@@ -371,12 +382,13 @@ button:hover {
   overflow: hidden;
   box-shadow: 5px 5px 5px rgba(150, 100, 100, 0.8),
     -1px -1px 5px -1px rgba(255, 255, 255, 0.8);
+  position: relative;
 }
 .song-img img {
   margin-top: 70px;
 }
 .songtext {
-  width: 88%;
+  width: 100%;
   position: absolute;
   background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(3px);
@@ -508,7 +520,7 @@ button:hover {
 }
 /* ====== Song Lyrics ====== */
 #lyrics {
-  padding: 0px 200px;
+  padding: 0px 10%;
 }
 #b{
   font-size: 20px;
@@ -517,8 +529,8 @@ button:hover {
   pointer-events: none;
 }
 .songinfo,#b, #b a,#lyrics p {color: rgb(176, 176, 176);} 
-.songinfo table td {
-  padding-left: 15px;
+.songinfo table :is(th, td) {
+  padding: 5px 15px;
 }
 audio {
   width: 100%;
@@ -527,14 +539,19 @@ audio {
 /* =================== Artist Page =================== */
 .artist{
   padding: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .artist .artistimg {
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 25px;
+}
+.artist .artist-details{
+padding-left: 20px;
 }
 .artist svg{
   margin-left: 15px;
@@ -549,7 +566,7 @@ audio {
 }
 .albumDetails .music-card{
   width: 250px;
-  height: 250px;
+  height: auto;
   margin-right: 40px;
 }
 .albumDetails .info{
@@ -562,21 +579,34 @@ audio {
 .albumDetails .info p{
   color: rgb(200, 200, 200);
 }
-table {
+.track-details {
   width: 100%;
+  padding: 0px;
+  list-style: none;
 }
-table tr:nth-child(even) {
-  background-color: rgba(100, 100, 100, 0.2);
+.track-details li {
+  padding: 15px;
+  margin: 5px 0px;
+  border-radius: 10px;
 }
-table tr:hover {
+.track-details li:nth-child(even) {
   background-color: rgba(100, 100, 100, 0.1);
+  }
+.track-details li:hover {
+  background-color: rgba(100, 100, 100, 0.25);
 }
-.container table table tr td {
-  padding: 0px 10px;
-  margin: 10px 0px;
+.track-details li a {
+  display: flex;
+  justify-content: space-between;
 }
-.container .song-thumbnail{
-  width: 50px;
+.track-details div:nth-child(1){
+  min-width: 5%;
+}
+.track-details div:nth-child(2){
+  width: 65%;
+}
+.track-details div:nth-child(3){
+  width: 25%;
 }
 /* =================== Footer =================== */
 #footer {
@@ -609,12 +639,6 @@ table tr:hover {
 #footer hr {
   width: 110%;
   border: 0.1px solid var(--dull-red);
-  animation: animate 3s ease infinite;
-}
-@keyframes animate {
-  50% {
-    transform: scaleX(2);
-  }
 }
 /* ================= Page 404 ================== */
 .page404 {
@@ -647,9 +671,6 @@ table tr:hover {
   .song-img {
     width: 100%;
     height: auto;
-  }
-  .songtext {
-    width: 84%;
   }
 }
 @media screen and (max-width: 900px) {
@@ -701,15 +722,13 @@ table tr:hover {
     margin: 20px;
   }
   .song-img {
-    margin-top: 20px;
-    width: 100%;
+    margin-top: 0px 20px;
     height: auto;
   }
   .song-img img {
     margin-top: 60px;
   }
   .songtext {
-    width: 90%;
     padding: 12px 20px;
   }
   .songtext p:nth-child(1) {
@@ -753,12 +772,6 @@ table tr:hover {
   /* ===== Radio ===== */
   .div33 {
     width: 100%;
-    float: left;
-    cursor: pointer;
-  }
-  .div-blur {
-    position: relative;
-    top: -130px;
   }
   /* ========= search ========== */
   #search {
@@ -767,14 +780,7 @@ table tr:hover {
   /* ===== footer ===== */
   #footer hr {
     width: 100%;
-    transform: translateX(5px);
     border: 0.1px solid var(--dull-red);
-    animation: animate 3s ease infinite;
-  }
-  @keyframes animate {
-    50% {
-      transform: translateX(0px) scaleX(1.5);
-    }
   }
 }
 @media screen and (max-width: 500px) {
@@ -881,9 +887,6 @@ table tr:hover {
     top: 20px;
     margin: 10px 50px;
   }
-  .songtext {
-    width: 84%;
-  }
   /* ========= search ========== */
   #search {
     width: 100%;
@@ -903,16 +906,11 @@ table tr:hover {
   .music-card {
     width: 100%;
     height: auto;
+    min-height: 140px;
   }
   /* ===== Radio ===== */
   .div33 {
     width: 100%;
-    float: left;
-    cursor: pointer;
-  }
-  .div-blur {
-    position: relative;
-    top: -30%;
   }
   /* === logo section === */
   .logobox {
@@ -944,16 +942,5 @@ table tr:hover {
   }
   #copyright {
     margin: 10px;
-  }
-  #footer hr {
-    width: 75%;
-    transform: translateX(40px);
-    border: 0.1px solid var(--dull-red);
-    animation: animate 3s ease infinite;
-  }
-  @keyframes animate {
-    50% {
-      transform: translateX(35px) scaleX(1.5);
-    }
   }
 }
