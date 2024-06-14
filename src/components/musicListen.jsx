@@ -142,7 +142,8 @@ function MusicListen(props) {
     const options = {
       method: 'GET',
       headers: {
-        "X-RapidAPI-Key" :API_Fetch["X-RapidAPI-Key"],
+        // "X-RapidAPI-Key" :API_Fetch["X-RapidAPI-Key"],
+        'X-RapidAPI-Key' : '0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf',
         'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
       }
     };
