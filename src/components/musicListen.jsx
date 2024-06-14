@@ -68,7 +68,7 @@ function MusicListen(props) {
     return () => {
       isMount = false;
     };
-  }, [songId, page, per_page, sort]);
+  }, [API_Fetch, songId, page, per_page, sort]);
 
   // ----------- Song -------------
   useEffect(() => {
@@ -93,7 +93,7 @@ function MusicListen(props) {
     return () => {
       isMount = false;
     };
-  }, [trackId]);
+  }, [API_Fetch, trackId]);
 
   // ----------- Song Lyrics -------------
   useEffect(() => {
@@ -119,7 +119,7 @@ function MusicListen(props) {
       return () => {
         isMount = false;
       };
-    }, [trackId]);
+    }, [API_Fetch, trackId]);
     const refLyrics = useRef(null);
     if (refLyrics.current){
       const element = refLyrics.current;
@@ -130,6 +130,7 @@ function MusicListen(props) {
       {
         primary_artist: lyrics2['primary_artist'],
         primary_album: lyrics2['primary_album'],
+        primary_album_id: lyrics2['primary_album_id'],
         tag: lyrics2['tag'],
         release_date: lyrics2['release_date'],
       },
@@ -142,7 +143,6 @@ function MusicListen(props) {
     const options = {
       method: 'GET',
       headers: {
-        // "X-RapidAPI-Key" :API_Fetch["X-RapidAPI-Key"],
         'X-RapidAPI-Key' : '0da30ee1fcmshe39d11c775693a5p1bb17ejsnad7cf9580ebf',
         'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
       }
@@ -150,12 +150,12 @@ function MusicListen(props) {
     fetch(url, options)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       setSpotify(response['tracks'][0]['preview_url']);
     })
     .catch((err) => console.error(err));
 
-  }, []);
+  }, [track]);
   // ========================= Fetch Song Track end =========================
   const trackDetails = [
     {
@@ -244,9 +244,6 @@ function MusicListen(props) {
                 <img src={i.image} alt="album art" />
               </div>
               <audio src={spotify} controls></audio>
-              {/* <div className="musicbar">
-                <div id="pbar" className="progressbar"></div>
-              </div> */}
               <div className="music-btn">
                 <div onClick={() => setCount(count + 1)}>
                   <svg
@@ -351,8 +348,6 @@ function MusicListen(props) {
                     <div
                       className="songslist b-radius"
                       key={a}
-                      // onLoad={() => songSelect(j?.id)}
-                      // onClick={songSelect(j?.id)}
                       onClick={()=>setTrackId(j?.id)}
                     >
                       <div className="song-card b-radius">
@@ -385,7 +380,7 @@ function MusicListen(props) {
             <table key={a}>
               <tbody>
               <tr><th>Artist</th><td>{i.primary_artist}</td></tr>
-              <tr><th>Album</th><td>{i.primary_album}</td></tr>
+              <tr><th>Album</th><td><Link to={`/react-music.com/albums/${i.primary_album_id}`}>{i.primary_album}</Link></td></tr>
               <tr><th>Genre</th><td>{i.tag}</td></tr>
               <tr><th>Released</th><td>{i.release_date}</td></tr>
               </tbody>

@@ -10,15 +10,7 @@ function MusicArtistAlbums(props) {
 
     // ===== Set artist Id =====
     let songId = words[5];
-    // function cleanId() {
-    //     if (songId === ":id") {
-    //     songId = 1072207;
-    //     return songId;
-    //     } else {
-    //     return songId;
-    //     }
-    // }
-    // cleanId();
+    
     // ----------------------------------------------------------
     const albumId = parseInt(songId)
     // console.log(albumId)
@@ -26,7 +18,7 @@ function MusicArtistAlbums(props) {
     const [albumAppearance, setArtistAlbumAppearance] = useState([{"track_number":"1","song":{"title_with_featured":"loading ...","primary_artist":{"name":""}}},
                                                                   {"track_number":"2","song":{"title_with_featured":"loading ...","primary_artist":{"name":""}}}
                                                                 ]);
-    const [albumsCount, setAlbumsCount] = useState(2);
+
     const page = 1;
 
     // ----------- Artist Details -------------
@@ -49,13 +41,13 @@ function MusicArtistAlbums(props) {
         return () => {
         isMount = false;
         };
-    }, [albumId]);
+    }, [API_Fetch, albumId]);
 
     // ----------- Artist Details -------------
     useEffect(() => {
         let isMount = true;
         fetch(
-        `${API_Fetch["api-url"]}/album/appearances/?id=${albumId}&per_page=${albumsCount}&page=${page}`,
+        `${API_Fetch["api-url"]}/album/appearances/?id=${albumId}&page=${page}`,
         {method: "GET",
             headers: API_Fetch["headers"]}
         )
@@ -69,7 +61,7 @@ function MusicArtistAlbums(props) {
         .catch((err) => console.error(err));
         
         return () => {isMount = false;};
-    }, [albumId, albumsCount,page]);
+    }, [API_Fetch, albumId, page]);
 
 
     return (<>
@@ -79,7 +71,7 @@ function MusicArtistAlbums(props) {
                     <img
                     className="c-hover"
                     src={albumDetail?.cover_art_thumbnail_url}
-                    alt={`image of ${albumDetail?.name} album`}
+                    alt={`${albumDetail?.name} album`}
                     />
                 </div>
                 <div className="info">

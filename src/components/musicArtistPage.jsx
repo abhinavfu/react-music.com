@@ -60,7 +60,7 @@ function MusicArtistPage(props) {
       return () => {
       isMount = false;
     };
-  }, [songId]);
+  }, [API_Fetch, songId]);
 
   // ----------- Artist Albums -------------
   useEffect(() => {
@@ -82,7 +82,7 @@ function MusicArtistPage(props) {
       return () => {
         isMount = false;
       };
-  }, [songId, page, albumsCount]);
+  }, [API_Fetch, songId, page, albumsCount]);
 
   // ----------- Artist Songs -------------
   useEffect(() => {
@@ -104,12 +104,12 @@ function MusicArtistPage(props) {
     return () => {
       isMount = false;
     };
-  }, [songId, sort, page, songsCount]);
+  }, [API_Fetch, songId, sort, page, songsCount]);
 
   return (
     <React.Fragment>
       <div className="artist">
-        <div className="artistimg"><img src={artistDetails?.image_url} alt={'image of '+artistDetails?.name} /></div>
+        <div className="artistimg"><img src={artistDetails?.image_url} alt={"profile of "+artistDetails?.name} /></div>
         <div className="artist-details">
           <h1>{artistDetails?.name} 
           {artistDetails?.is_verified ? (
@@ -149,7 +149,7 @@ function MusicArtistPage(props) {
                       <img
                         className="c-hover"
                         src={data.song_art_image_thumbnail_url}
-                        alt='image of {data.primary_artist.name} album track'
+                        alt='album cover'
                       />
                     </div>
                     <p>{data.title}</p>
