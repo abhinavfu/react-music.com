@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import testimg from './panda.svg'
+import testimg from './loader.svg';
 
 function MusicListen(props) {
   const API_Fetch = props.API_Fetch;
   const [track, setTrack] = useState({
-                                    'title': 'Test title',
+                                    'title': '...',
                                     'id': '1',
-                                    'artist_names': 'Test artist_names',
+                                    'artist_names': '',
                                     'song_art_image_url': testimg,
-                                    "primary_artist":{"id":"1","name":"Test Artist name"}
+                                    "primary_artist":{"id":"1","name":""}
                                     });
-  const [lyrics, setLyrics] = useState("<p>Test Lyrics</p><p>----------</p><p>la la la la laa</p><p>la la la la laa</p><p>laa laa laa laa</p>");
-  const [lyrics2, setLyrics2] = useState({"primary_artist":"Test primary_artist","primary_album":"Test primary_album","tag":"Test tag","release_date":"Test release_date",});
+  const [lyrics, setLyrics] = useState("<p>Loading ...</p>");
+  const [lyrics2, setLyrics2] = useState({"primary_artist":"...","primary_album":"...","tag":"...","release_date":"...",});
   const [songs, setSongs] = useState([
-                                      {"id":"1","full_title":"Test full_title 1","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"1","name":"Test Artist name"}},
-                                      {"id":"2","full_title":"Test full_title 2","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"2","name":"Test Artist name"}},
-                                      {"id":"3","full_title":"Test full_title 3","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"3","name":"Test Artist name"}},
-                                      {"id":"4","full_title":"Test full_title 4","song_art_image_thumbnail_url":testimg,"release_date_for_display":"Test release_date_for_display","primary_artist":{"id":"4","name":"Test Artist name"}},
+                                      {"id":"1","full_title":"...","song_art_image_thumbnail_url":testimg,"release_date_for_display":"","primary_artist":{"id":"1","name":""}},
+                                      {"id":"2","full_title":"...","song_art_image_thumbnail_url":testimg,"release_date_for_display":"","primary_artist":{"id":"2","name":""}},
+                                      {"id":"3","full_title":"...","song_art_image_thumbnail_url":testimg,"release_date_for_display":"","primary_artist":{"id":"3","name":""}},
+                                      {"id":"4","full_title":"...","song_art_image_thumbnail_url":testimg,"release_date_for_display":"","primary_artist":{"id":"4","name":""}},
                                     ]);
   const [spotify, setSpotify] = useState('');
   const [trackId, setTrackId] = useState("2849661");
@@ -150,6 +150,7 @@ function MusicListen(props) {
     fetch(url, options)
     .then((response) => response.json())
     .then((response) => {
+      console.log(response)
       setSpotify(response['tracks'][0]['preview_url']);
     })
     .catch((err) => console.error(err));

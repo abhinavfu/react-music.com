@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MusicArtistSongs from "./musicArtistSongs";
-import testimg from './panda.svg'
+import testimg from './loader.svg';
 
 function MusicArtistPage(props) {
   const API_Fetch = props.API_Fetch;
@@ -32,11 +31,11 @@ function MusicArtistPage(props) {
   const [songsCount, setSongsCount] = useState(5);
   const [albumsCount, setAlbumsCount] = useState(5);
   // ----------------------------------------------------------
-  const [artistDetails, setArtistDetails] = useState({"name":"Test artist name","image_url":testimg,"description_preview":"Test artist description."});
-  const [artistAlbums, setArtistAlbums] = useState([{"id":"11","name":"Test album name","cover_art_thumbnail_url":testimg,"release_date_components":{"year":"test 2022 year"}},
-                                                    {"id":"12","name":"Test album name","cover_art_thumbnail_url":testimg,"release_date_components":{"year":"test 2022 year"}}]);
-  const [artistSongs, setArtistSongs] = useState([{"id":"21","title":"Test song name","song_art_image_thumbnail_url":testimg,"primary_artist":{"id":"11","name":"test artist name"}},
-                                                  {"id":"22","title":"Test song name","song_art_image_thumbnail_url":testimg,"primary_artist":{"id":"12","name":"test artist name"}}]);
+  const [artistDetails, setArtistDetails] = useState({"name":"Loading ...","image_url":testimg,"description_preview":"Loading ..."});
+  const [artistAlbums, setArtistAlbums] = useState([{"id":"11","name":"","cover_art_thumbnail_url":testimg,"release_date_components":{"year":""}},
+                                                    {"id":"12","name":"","cover_art_thumbnail_url":testimg,"release_date_components":{"year":""}}]);
+  const [artistSongs, setArtistSongs] = useState([{"id":"21","title":"","song_art_image_thumbnail_url":testimg,"primary_artist":{"id":"11","name":""}},
+                                                  {"id":"22","title":"","song_art_image_thumbnail_url":testimg,"primary_artist":{"id":"12","name":""}}]);
   // ----------------------------------------------------------
   const sort = "popularity";
   const page = 1;

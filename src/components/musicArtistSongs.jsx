@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import testimg from './panda.svg'
+import testimg from './loader.svg';
 
 function MusicArtistSongs(props) {
   const API_Fetch = props.API_Fetch;
   
-  const [m0, setM0] = useState([{"id":"1","primary_artist":{"id":"11","name":"Test song name"},"song_art_image_thumbnail_url":testimg},
-                                {"id":"2","primary_artist":{"id":"12","name":"Test song name"},"song_art_image_thumbnail_url":testimg}]);
+  const [m0, setM0] = useState([{"id":"1","primary_artist":{"id":"11","name":""},"song_art_image_thumbnail_url":testimg},
+                                {"id":"2","primary_artist":{"id":"12","name":""},"song_art_image_thumbnail_url":testimg}]);
   // artist id = 344497
   useEffect(() => {
     let isMount = true;

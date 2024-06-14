@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import testimg from './panda.svg'
+import testimg from './loader.svg';
 
 function MusicArtistAlbums(props) {
     const API_Fetch = props.API_Fetch;
@@ -22,9 +22,9 @@ function MusicArtistAlbums(props) {
     // ----------------------------------------------------------
     const albumId = parseInt(songId)
     // console.log(albumId)
-    const [albumDetail, setArtistAlbumDetails] = useState({"id":"1","name":"test Album name","cover_art_thumbnail_url":testimg,"release_date_for_display":"Test 12 july,2023","description_preview":"Test description_preview","artist":{"name":"Test Artist name"}});
-    const [albumAppearance, setArtistAlbumAppearance] = useState([{"track_number":"1","song":{"title_with_featured":"test title_with_featured","primary_artist":{"name":"Test Artist name"}}},
-                                                                  {"track_number":"2","song":{"title_with_featured":"test title_with_featured","primary_artist":{"name":"Test Artist name"}}}
+    const [albumDetail, setArtistAlbumDetails] = useState({"id":"1","name":"","cover_art_thumbnail_url":testimg,"release_date_for_display":"","description_preview":"","artist":{"name":"Loading ..."}});
+    const [albumAppearance, setArtistAlbumAppearance] = useState([{"track_number":"1","song":{"title_with_featured":"loading ...","primary_artist":{"name":""}}},
+                                                                  {"track_number":"2","song":{"title_with_featured":"loading ...","primary_artist":{"name":""}}}
                                                                 ]);
     const [albumsCount, setAlbumsCount] = useState(2);
     const page = 1;

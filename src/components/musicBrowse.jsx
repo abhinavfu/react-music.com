@@ -18,9 +18,10 @@ function MusicBrowse(props) {
     { name: "Atif Aslam", id: 357955 },
     { name: "Harry Styles", id: 22457 },
     { name:"Arijit Singh", id:205744 },
+    { name: "Ed Sheeran", id: 12418 },
+
     // { name: "BTS", id: 70113 },
     // { name: "Taylor Swift", id: 1177 },
-    { name: "Ed Sheeran", id: 12418 },
     // { name: "Camila Cabello", id: 609667 },
     // { name: "Sia", id: 16775 },
     // { name: "ZAYN", id: 339472 },
